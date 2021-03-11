@@ -47,4 +47,4 @@ export const counterSelector = createSelector(
 
 export const updatedAtSelector = createSelector(
     featureSelector, state => state.updatedAt
-)
+) 
