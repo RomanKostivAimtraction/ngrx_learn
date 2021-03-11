@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { counterSelector, minus, plus, reset, updatedAtSelector } from '../reducers/counter';
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-main',
@@ -6,31 +9,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  counter = 0;
-  updateAt?: number;
+  // counter = 0;
+  // updateAt?: number;
   // disbleBtn = false;
-  constructor() { }
+
+  count$ = this.store.select(counterSelector);
+  canNotMinus$ = this.count$.pipe(map(count => count <= 0));
+  updatedAt$ = this.store.select(updatedAtSelector)
+
+  constructor(
+    private store: Store
+  ) { }
 
   ngOnInit(): void {
   }
 
-  get canNotMinus(): boolean {
-    return this.counter <= 0;
-  }
-
   plus(): void {
-    this.updateAt = Date.now();
-    this.counter++;
-
+    this.store.dispatch(plus());
   }
 
   minus(): void {
-    this.updateAt = Date.now();
-    this.counter--;
+    this.store.dispatch(minus())
   }
 
   reset(): void {
-    this.updateAt = Date.now();
-    this.counter = 0;
+    this.store.dispatch(reset())
   }
 }
