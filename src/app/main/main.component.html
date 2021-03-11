@@ -1,7 +1,7 @@
 <button (click)="plus()">+1</button>
-<button (click)="minus()" [disabled]='canNotMinus'>-1</button>
-<button (click)="reset()" [disabled]='canNotMinus'>=0</button>
+<button (click)="minus()" [disabled]='canNotMinus$ | async'>-1</button>
+<button (click)="reset()" [disabled]='canNotMinus$ | async'>=0</button>
 
-<strong>Лічильник = {{counter}}</strong>
+<strong>Лічильник = {{count$ | async}}</strong>
 
-<h3 *ngIf="updateAt" >Останне оновлення: {{updateAt | date:'HH:mm:ss dd/MM/yyy'}}</h3>
+<h3 *ngIf="updatedAt$ | async" >Останне оновлення: {{updatedAt$ | async | date:'HH:mm:ss dd/MM/yyy'}}</h3>
